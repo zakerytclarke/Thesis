@@ -1,12 +1,16 @@
 import parser
-import squad
+import test
 
 
-doc=parser.nlp("When did Beyonce start becoming popular?")
-for sentence in doc.sents:
-  print(sentence)
+# Test
+question="In what city and state did Beyonce grow up?"     
+answer="Houston, Texas"
 
-#for question in squad.questions:
-#  print(question["question"])
-#  print(parser.svo_parser(question["question"],question["answers"]))
 
+
+print(question+"    "+answer)
+print(parser.svo_parser(question,[{'text':answer}]))
+parser.renderParseTree(question)
+
+
+# test.run()

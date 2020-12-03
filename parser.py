@@ -1,8 +1,10 @@
 import spacy
+from spacy import displacy
+from spacy.matcher import Matcher  
 
 nlp = spacy.load("en_core_web_sm")
 
-
+spacy.explain("acomp")
 
 ## Parser to convert questions to Subject, Verb, Object triplets
 # dependency markers for subjects
@@ -36,14 +38,31 @@ def svo(text):
   verb="is"
   obj=""
 
+  #Get noun phrases
+  entitites=[ent.text for ent in parsed_text.ents]
   nouns=[chunk.text for chunk in parsed_text.noun_chunks]
+  
+  nouns=(sorted(nouns, key=lambda s: (-1,) if containsEntity(s,entitites) else (1,) ))
+  nouns=(sorted(nouns, key=lambda s: (-1,) if s[0].isupper() else (1,) ))
+  #Get verb phrases
+  #pattern = [{'POS': 'VERB', 'OP': '?'},
+  #           {'POS': 'ADV', 'OP': '*'},
+  #          {'POS': 'VERB', 'OP': '+'}]
+  # matcher = Matcher(nlp.vocab) 
   verbs=[token.lemma_ for token in parsed_text if token.pos_ == "VERB"]
+
+
   
   if (len(nouns)>0) : subj=nouns[0]
   if (len(verbs)>0) : verb=verbs[0]
   if (len(nouns)>1) : obj=nouns[1]
   return [subj,verb,obj]
 
+def containsEntity(str,entitites):
+  for ent in entitites:
+    if ent in str:
+      return True
+  return False
 
 
 def sov_entities(text):
@@ -55,10 +74,14 @@ def sov_entities(text):
 def replaceAnswer(svo,answer):
   if(svo[0]==""):
     svo[0]=answer
-  if(svo[1]==""):
-    svo[1]=answer
-  if(svo[2]==""):
-    svo[2]=answer
+  else:
+    if(svo[1]==""):
+      svo[1]=answer
+    else:
+      if(svo[2]==""):
+        svo[2]=answer
+      else: 
+        svo[2]=answer
   return svo
 
 def svo_parser(text,answers):
@@ -103,3 +126,15 @@ def svo_parser(text,answers):
     temp=svos.copy()
     out.append(replaceAnswer(temp,x["text"]))
   return out
+
+
+def svo_parseTree(text):
+  parsed_text = nlp(text)
+
+  for token in parsed_text:
+    print(token.dep_)
+
+
+def renderParseTree(text):
+  parsed_text = nlp(text)
+  displacy.serve(parsed_text,style="dep")
