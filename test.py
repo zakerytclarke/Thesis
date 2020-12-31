@@ -16,7 +16,11 @@ import squad
 
 
 def run():
-  for question in squad.questions:
-    print(question["question"]+"    "+question["answers"][0]["text"])
-    print(parser.svo_parser(question["question"],question["answers"]))
- 
+  for q in range(442):
+    print(q);
+    resource=squad.getResource(q,0);
+    for question in resource: 
+      if(len(question["answers"])>0):
+        print(question["question"]+"    "+question["answers"][0]["text"])
+        print(parser.svo_parser(question["question"],question["answers"]))
+

@@ -8,9 +8,9 @@ answer="Houston, Texas"
 
 
 
-print(question+"    "+answer)
-print(parser.svo_parser(question,[{'text':answer}]))
-parser.renderParseTree(question)
+# print(question+"    "+answer)
+# print(parser.svo_parser(question,[{'text':answer}]))
+# parser.renderParseTree(question)
 
 
-# test.run()
+test.run() 
