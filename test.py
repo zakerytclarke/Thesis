@@ -47,9 +47,9 @@ def sampleSummarizer():
     
    
 
-  file=open('./output/sampleSummarizer.csv','w');
+  file=open('./output/sampleSummarizerTest.csv','w');
   sys.stdout = file;
-  for q in range(442):
+  for q in range(squad.articleCountTest()):
     article=squad.getArticleTest(q,0)
     summary=""
     resource=squad.getResourceTest(q,0);
