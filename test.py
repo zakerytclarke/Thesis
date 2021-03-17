@@ -1,6 +1,7 @@
 import parser
 import squad
 import sys
+import csv
 
 #https://stackoverflow.com/questions/36610179/how-to-get-the-dependency-tree-with-spacy
 #https://www.nltk.org/
@@ -40,17 +41,32 @@ def sample():
     print("</ANSWER>");
 
 def sampleSummarizer():
-  file=open('./output/sampleSummarizer.txt','w');
+    
+  fields = ['text','summary']  
+  rows = []  
+    
+   
+
+  file=open('./output/sampleSummarizer.csv','w');
   sys.stdout = file;
   for q in range(442):
-    article=squad.getArticle(q,0)
+    article=squad.getArticleTest(q,0)
     summary=""
-    resource=squad.getResource(q,0);
+    resource=squad.getResourceTest(q,0);
     for question in resource: 
       if(len(question["answers"])>0):
-        print(parser.svo_parser(question["question"],question["answers"])[0])
-
-
+        temp=parser.svo_parser(question["question"],question["answers"])[0]
+        summary+=" ".join(temp)+". ";
+    rows.append([article,summary])
+    #print("\"{}\",\"{}\"".format(repr(article),repr(summary)))
+    filename = "summarized.csv"
+    
+    with open(filename, 'w') as csvfile:  
+      csvwriter = csv.writer(csvfile)  
+        
+      csvwriter.writerow(fields)  
+        
+      csvwriter.writerows(rows)
 
 def sampleSubjects():
   file=open('./output/sampleSubj.txt','w');
