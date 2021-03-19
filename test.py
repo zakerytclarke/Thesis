@@ -87,7 +87,7 @@ def sampleCSV():
         temp=parser.svo_parser(question["question"],question["answers"])[0]
         question+=question["question"]
         summary+=" ".join(temp)+". ";
-    rows.append([article,summary])
+    rows.append([article,question,summary])
     #print("\"{}\",\"{}\"".format(repr(article),repr(summary)))
     filename = "summarizedCSV.csv"
     
