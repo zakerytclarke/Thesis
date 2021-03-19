@@ -68,6 +68,36 @@ def sampleSummarizer():
         
       csvwriter.writerows(rows)
 
+def sampleCSV():
+    
+  fields = ['text','questions','summary']  
+  rows = []  
+    
+   
+
+  file=open('./output/sampleCSV.csv','w');
+  sys.stdout = file;
+  for q in range(squad.articleCountTest()):
+    article=squad.getArticleTest(q,0)
+    summary=""
+    questions=""
+    resource=squad.getResourceTest(q,0);
+    for question in resource: 
+      if(len(question["answers"])>0):
+        temp=parser.svo_parser(question["question"],question["answers"])[0]
+        question+=question["question"]
+        summary+=" ".join(temp)+". ";
+    rows.append([article,summary])
+    #print("\"{}\",\"{}\"".format(repr(article),repr(summary)))
+    filename = "summarizedCSV.csv"
+    
+    with open(filename, 'w') as csvfile:  
+      csvwriter = csv.writer(csvfile)  
+        
+      csvwriter.writerow(fields)  
+        
+      csvwriter.writerows(rows)
+
 def sampleSubjects():
   file=open('./output/sampleSubj.txt','w');
   sys.stdout = file;
