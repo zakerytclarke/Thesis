@@ -40,32 +40,26 @@ def sample():
         print(parser.svo_parser(question["question"],question["answers"])[0])
     print("</ANSWER>");
 
-def sampleSummarizer():
-    
+#Generate Summaries for fine-tune dataset
+def sampleSummarizer(dataset):
   fields = ['text','summary']  
   rows = []  
-    
-   
-
-  file=open('./output/sampleSummarizerTest.csv','w');
-  sys.stdout = file;
-  for q in range(squad.articleCountTest()):
-    article=squad.getArticleTest(q,0)
-    summary=""
-    resource=squad.getResourceTest(q,0);
-    for question in resource: 
-      if(len(question["answers"])>0):
-        temp=parser.svo_parser(question["question"],question["answers"])[0]
-        summary+=" ".join(temp)+". ";
-    rows.append([article,summary])
+  for q in range(squad.articleCount(dataset)):
+     for r in range(squad.paragraphCount(dataset)):
+      article=squad.getArticle(q,r,dataset)
+      summary=""
+      resource=squad.getResource(q,r,dataset);
+      for question in resource: 
+        if(len(question["answers"])>0):
+          temp=parser.svo_parser(question["question"],question["answers"])[0]
+          summary+=" ".join(temp)+". ";
+      rows.append([article,summary])
     #print("\"{}\",\"{}\"".format(repr(article),repr(summary)))
-    filename = "summarized.csv"
-    
+    filename = "./output/summarized.csv"
+  
     with open(filename, 'w') as csvfile:  
-      csvwriter = csv.writer(csvfile)  
-        
+      csvwriter = csv.writer(csvfile)        
       csvwriter.writerow(fields)  
-        
       csvwriter.writerows(rows)
 
 def sampleCSV():

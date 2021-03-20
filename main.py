@@ -13,4 +13,4 @@ answer="Houston, Texas"
 # parser.renderParseTree(question)
 
 
-test.sampleCSV() 
+test.sampleSummarizer("train") 

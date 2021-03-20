@@ -6,21 +6,29 @@ with open('./datasets/squad/train-v2.0.json') as squadFile:
 with open('./datasets/squad/dev-v2.0.json') as squadFile2:
   squadTest = json.load(squadFile2)
 
-def getResource(topic,paragraph):
-  return squadQuestions['data'][topic]['paragraphs'][paragraph]['qas'];
+def getResource(topic,paragraph,dataset):
+  if dataset=="train":
+    return squadQuestions['data'][topic]['paragraphs'][paragraph]['qas'];
+  else:
+    return squadTest['data'][topic]['paragraphs'][paragraph]['qas'];
 
-def getArticle(topic,paragraph):
-  return squadQuestions['data'][topic]['paragraphs'][paragraph]["context"];
+def getArticle(topic,paragraph,dataset):
+  if dataset=="train":
+    return squadQuestions['data'][topic]['paragraphs'][paragraph]["context"];
+  else:
+    return squadTest['data'][topic]['paragraphs'][paragraph]["context"];
 
-def articleCount():
-  return len(squadQuestions['data']);
+def articleCount(dataset):
+  if dataset=="train":
+    return len(squadQuestions['data']);
+  else:
+    return len(squadTest['data']);
+  
 
-def getResourceTest(topic,paragraph):
-  print(topic)
-  return squadTest['data'][topic]['paragraphs'][paragraph]['qas'];
 
-def getArticleTest(topic,paragraph):
-  return squadTest['data'][topic]['paragraphs'][paragraph]["context"];
-
-def articleCountTest():
-  return len(squadTest['data']);
+def paragraphCount(topic,dataset):
+  if dataset=="train":
+    return len(squadQuestions['data'][topic]['paragraphs'])
+  else:
+    return len(squadTest['data'][topic]['paragraphs'])
+ 
