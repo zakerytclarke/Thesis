@@ -45,7 +45,8 @@ def sampleSummarizer(dataset):
   fields = ['text','summary']  
   rows = []  
   for q in range(squad.articleCount(dataset)):
-     for r in range(squad.paragraphCount(dataset)):
+     print(q)
+     for r in range(squad.paragraphCount(q,dataset)):
       article=squad.getArticle(q,r,dataset)
       summary=""
       resource=squad.getResource(q,r,dataset);
@@ -55,12 +56,12 @@ def sampleSummarizer(dataset):
           summary+=" ".join(temp)+". ";
       rows.append([article,summary])
     #print("\"{}\",\"{}\"".format(repr(article),repr(summary)))
-    filename = "./output/summarized.csv"
+  filename = "./output/summarized.csv"
   
-    with open(filename, 'w') as csvfile:  
-      csvwriter = csv.writer(csvfile)        
-      csvwriter.writerow(fields)  
-      csvwriter.writerows(rows)
+  with open(filename, 'w') as csvfile:  
+    csvwriter = csv.writer(csvfile)        
+    csvwriter.writerow(fields)  
+    csvwriter.writerows(rows)
 
 def sampleCSV():
     
