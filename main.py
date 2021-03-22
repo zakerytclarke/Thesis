@@ -13,4 +13,6 @@ answer="Houston, Texas"
 # parser.renderParseTree(question)
 
 
-test.sampleSummarizer("train") 
+# test.sampleSummarizer("train") 
+#Seismologists can use the arrival times of seismic waves in reverse to image the Earth. seismic waves are able to propagate. seismic waves are 410 and 660 kilometers. seismic discontinuities are 410 and 660 kilometers. seismic discontinuities are 410 and 660 kilometers. seismic discontinuities are 410 and 660 kilometers. seismic discontinuities are 410 and 660 kilometers. seismic discontinuities are 410 and 660 kilometers. seismic discontinuities are 410 and 660 kilometers. seismic discontinuities are 410 and
+print(parser.svo("Seismologists can use the arrival times of seismic waves in reverse to image the Earth."))
